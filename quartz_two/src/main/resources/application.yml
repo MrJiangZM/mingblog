@@ -1,0 +1,51 @@
+server:
+  port: 8009
+
+spring:
+  jackson: # jackson 给前端返回的时间
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  jpa: # jpa 的简单配置
+    show-sql: true
+    open-in-view: true
+    database: MYSQL
+
+  datasource:   # 数据库相关的配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:  # 德鲁伊的配置   包含的德鲁伊的页面监听配置
+      url: jdbc:mysql://localhost:3306/quartz_one?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: root
+
+# quartz的相关配置
+#  quartz:
+##    job-store-type: jdbc # memory 也可以在内存中 但是不好查问题
+#    properties:
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: clusteredScheduler
+#            instanceId: AUTO_TEST
+#          jobStore:
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#            tablePrefix: QRTZ_
+#            dataSource: quartz_local
+#            isClustered: true
+#            clusterCheckinInterval: 10000
+#            useProperties: false
+#          threadPool:
+#            class: org.quartz.simpl.SimpleThreadPool
+#            threadCount: 10
+#            threadPriority: 5
+#            threadsInheritContextClassLoaderOfInitializingThread: true
+#          dataSource:
+#            driver: com.mysql.cj.jdbc.Driver
+#            URL: jdbc:mysql://localhost:3306/quartz?characterEncoding=utf-8&useSSL=false
+#            user: root
+#            password: root
+#            maxConnections: 5
+
+
+

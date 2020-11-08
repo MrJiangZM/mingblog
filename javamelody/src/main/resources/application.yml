@@ -1,0 +1,9 @@
+server:
+  port: 9898
+  servlet:
+    context-path: melody
+
+spring:
+  application:
+    name: melody
+

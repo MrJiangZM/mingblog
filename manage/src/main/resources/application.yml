@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: @package.environment@
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  mvc.static-path-pattern: /static/**
+  thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
+      mode: LEGACYHTML5
+      encoding: UTF-8
+      templateMode: HTML5
+      servlet.content-type: text/html
+      cache: false
+
+server:
+  port: 8889
+  servlet:
+    context-path: /mzmanage
+  undertow:
+    worker-threads: 50
+    io-threads: 15
+    accesslog:
+      enabled: false

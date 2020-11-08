@@ -1,0 +1,25 @@
+#org.quartz.scheduler.instanceName = TheMyScheduler
+
+org:
+  quartz:
+    threadPool:
+      threadCount: 5
+      class: org.quartz.simpl.SimpleThreadPool
+      threadsInheritContextClassLoaderOfInitializingThread: true
+    jobStore:
+      class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      tablePrefix: QRTZ_
+      dataSource: quartz
+    dataSource:
+      quartz:
+        driver: com.mysql.cj.jdbc.Driver
+        URL: jdbc:mysql://localhost:3306/quartz?characterEncoding=utf-8&useSSL=false
+        user: root
+        password: root
+        maxConnections: 5
+
+org.quartz.threadPool.threadCount = 5
+org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool
+org.quartz.threadPool.threadPriority = 5
+org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread = true

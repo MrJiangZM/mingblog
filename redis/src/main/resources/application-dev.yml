@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  redis:
+    pool:
+    cluster:
+      nodes: 172.16.0.3:7001,172.16.0.3:7002,172.16.0.3:7003,172.16.0.3:7004,172.16.0.3:7005,172.16.0.3:7006
+    database: 1
+    # host: 106.52.88.16
+    # port: 7001
+    timeout: 60000
+    password: jiang@123
+    jedis:
+      pool:
+        max-idle: 8
+        max-wait: 500ms
+        min-idle: 0
+        max-active: 8

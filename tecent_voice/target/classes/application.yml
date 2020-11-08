@@ -1,0 +1,13 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /voice
+
+
+spring:
+  application:
+    name: swagger2
+
+swagger:
+  enable: true
+

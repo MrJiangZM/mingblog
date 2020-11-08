@@ -1,0 +1,9 @@
+server:
+  port: 9897
+  servlet:
+    context-path: moskito
+
+spring:
+  application:
+    name: spring-moskito
+

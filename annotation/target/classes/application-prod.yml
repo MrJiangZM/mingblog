@@ -1,0 +1,16 @@
+server:
+  port: 8083
+
+spring:
+  redis:
+    database: 1
+    host: 106.52.88.16
+    port: 7001
+    timeout: 60000
+    password: NSG_redis@web2
+    jedis:
+      pool:
+        max-idle: 8
+        max-wait: 500ms
+        min-idle: 0
+        max-active: 8

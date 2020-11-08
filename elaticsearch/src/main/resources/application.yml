@@ -1,0 +1,11 @@
+server:
+  port: 10001
+  servlet:
+    context-path: /elastic
+
+spring:
+  data:
+    elasticsearch:
+      cluster-name: my-application # 这个也是必要的
+      cluster-nodes: 106.52.88.16:9300  # 开启服务器端口号，配置默认的9300   nodes 不是node
+

@@ -1,0 +1,11 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /anno
+
+spring:
+  cache:
+    type: CAFFEINE
+    cache-names: test1,test2
+    caffeine:
+      spec: initialCapacity=50,maximumSize=500,expireAfterWrite=5s,refreshAfterWrite=7s

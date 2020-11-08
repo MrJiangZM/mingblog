@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ming.blog.dao.UserDao">
+
+    <resultMap type="com.ming.blog.pojo.secondary.UserJta" id="secondaryUserMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="secondaryUserMap">
+        select
+            id, name, password
+        from t_user user
+    </select>
+
+    <insert id="insert">
+        insert into t_user (id, name, password) value (#{id} ,#{name}, #{password});
+    </insert>
+
+    <!--<insert id="insertBatch"-->
+            <!--parameterType="java.util.List">-->
+        <!--insert into t_consult_log (-->
+        <!--buying_process_id,-->
+        <!--process_org_type,-->
+        <!--consult_id,-->
+        <!--consult_no,-->
+        <!--consult_type,-->
+        <!--consult_detail_id,-->
+        <!--sku_code,-->
+        <!--sku_name,-->
+        <!--purchase_group_code,-->
+        <!--purchase_group_name,-->
+        <!--category_code,-->
+        <!--category_name,-->
+        <!--brand_code,-->
+        <!--brand_name,-->
+        <!--original_suggest_count,-->
+        <!--before_update_count,-->
+        <!--after_update_count,-->
+        <!--updater_code,-->
+        <!--updater_name,-->
+        <!--update_time,-->
+        <!--update_reason_detail,-->
+        <!--update_reason,-->
+        <!--creator_code,-->
+        <!--creator_name,-->
+        <!--create_time,-->
+        <!--org_code,-->
+        <!--org_name,-->
+        <!--update_type,-->
+        <!--promise_trunover_weeks,-->
+        <!--promise_last_day,-->
+        <!--sys_enum_id,-->
+        <!--overgauge_reason,-->
+        <!--overgauge_type)-->
+        <!--values-->
+
+        <!--<foreach collection ="list" item="log" index= "index" separator =",">-->
+            <!--(-->
+            <!--#{log.buyingProcessId},-->
+            <!--#{log.processOrgType},-->
+            <!--#{log.consultId},-->
+            <!--#{log.consultNo},-->
+            <!--#{log.consultType},-->
+            <!--#{log.consultDetailId},-->
+            <!--#{log.skuCode},-->
+            <!--#{log.skuName},-->
+            <!--#{log.purchaseGroupCode},-->
+            <!--#{log.purchaseGroupName},-->
+            <!--#{log.categoryCode},-->
+            <!--#{log.categoryName},-->
+            <!--#{log.brandCode},-->
+            <!--#{log.brandName},-->
+            <!--#{log.originalSuggestCount},-->
+            <!--#{log.beforeUpdateCount},-->
+            <!--#{log.afterUpdateCount},-->
+            <!--#{log.updaterCode},-->
+            <!--#{log.updaterName},-->
+            <!--#{log.updateTime},-->
+            <!--#{log.updateReasonDetail},-->
+            <!--#{log.updateReason},-->
+            <!--#{log.creatorCode},-->
+            <!--#{log.creatorName},-->
+            <!--#{log.createTime},-->
+            <!--#{log.orgCode},-->
+            <!--#{log.orgName},-->
+            <!--#{log.updateType},-->
+            <!--#{log.promiseTrunoverWeeks},-->
+            <!--#{log.promiseLastDay},-->
+            <!--#{log.sysEnumId},-->
+            <!--#{log.overgaugeReason},-->
+            <!--#{log.overgaugeType})-->
+        <!--</foreach >-->
+    <!--</insert>-->
+</mapper>

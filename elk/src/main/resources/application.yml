@@ -1,0 +1,6 @@
+server:
+  port: 9200
+  servlet:
+    context-path: /mingblog/mybatis
+logging:
+  config: classpath:log4j2-dev.xml

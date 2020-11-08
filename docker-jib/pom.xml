@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>docker-jib</artifactId>
+    <name>docker_jib</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.3.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.3.0.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>com.google.cloud.tools</groupId>-->
+<!--                <artifactId>jib-maven-plugin</artifactId>-->
+<!--                <version>2.4.0</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; 相当于 Dockerfile 中的 FROM &ndash;&gt;-->
+<!--                    <from>-->
+<!--                        <image>amazoncorretto:8</image>-->
+<!--                    </from>-->
+<!--                    <to>-->
+<!--                        &lt;!&ndash;构建镜像名称，这里我使用maven中定义的项目名称&ndash;&gt;-->
+<!--                        <image>registry.cn-hangzhou.aliyuncs.com/docker_jiang_spring/springboot/${project.name}</image>-->
+<!--                        &lt;!&ndash;私有仓库的账号密码&ndash;&gt;-->
+<!--                        <auth>-->
+<!--                            <username>mr_jiangzm</username>-->
+<!--                            <password>jiang@123</password>-->
+<!--                        </auth>-->
+<!--                        &lt;!&ndash;Docker 镜像的 tag 这里使用maven定义的版本号&ndash;&gt;-->
+<!--                        <tags>-->
+<!--                            <tag>-->
+<!--                                ${project.version}-->
+<!--                            </tag>-->
+<!--                        </tags>-->
+<!--                    </to>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <configuration>
+                    <from>
+                        <!--base image -->
+                        <image>openjdk:alpine</image>
+                    </from>
+                    <to>
+                        <!--目标镜像registry地址,:前面是发布镜像的名称，:后面是发布的版本号 -->
+                        <image>registry.cn-hangzhou.aliyuncs.com/docker_jiang_spring/springboot/${project.name}</image>
+                        <!--私有仓库的账号密码-->
+                        <auth>
+                            <username>mr_jiangzm</username>
+                            <password>jiang@123</password>
+                        </auth>
+                        <tags>
+                            <tag>tag</tag>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

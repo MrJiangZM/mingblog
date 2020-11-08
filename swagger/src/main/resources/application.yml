@@ -1,0 +1,13 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /swagger2
+
+
+spring:
+  application:
+    name: swagger2
+
+swagger:
+  enable: true
+

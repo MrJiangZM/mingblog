@@ -1,0 +1,33 @@
+server:
+  port: 9402
+  servlet:
+    context-path: /rocketmq
+
+spring:
+  application:
+    name: rocketmq
+
+rocketmq:
+  producer: #生产者的配置
+    isOnOff: on  # 发送同一类消息的设置为同一个group，保证唯一
+    groupName: jiangProducer
+    namesrvAddr: 10.43.7.72:9876  # 服务地址
+    maxMessageSize: 4096  # 消息最大长度 默认1024*4(4M)
+    sendMsgTimeout: 3000  # 发送消息超时时间,默认3000  毫秒
+    # 发送消息失败重试次数，默认2
+    retryTimesWhenSendFailed: 2
+  consumer:  #消费者的配置
+    isOnOff: on  # 官方建议：确保同一组中的每个消费者订阅相同的主题。
+    groupName: jiangConsumer
+    namesrvAddr: 127.0.0.1:9876   # 服务地址
+#    topics: testTopic~*;ORDER_TOPIC~*;   # 接收该 Topic 下所有 Tag
+    consumeThreadMin: 20
+    consumeThreadMax: 64
+    consumeMessageBatchMaxSize: 1   # 设置一次消费消息的条数，默认为1条
+
+# 配置 Group  Topic  Tag
+rocket:
+  group: rocketGroup
+  topic: testTopic
+  tag: testTag
+
