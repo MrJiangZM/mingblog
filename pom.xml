@@ -50,6 +50,9 @@
         <module>redis-mq-producer2</module>
         <module>disruptor2</module>
         <module>tecent_voice</module>
+        <module>filestore</module>
+        <module>minio</module>
+        <module>fastdfs</module>
     </modules>
 
     <parent>
