@@ -53,6 +53,7 @@
         <module>filestore</module>
         <module>minio</module>
         <module>fastdfs</module>
+        <module>mapstruct</module>
     </modules>
 
     <parent>
