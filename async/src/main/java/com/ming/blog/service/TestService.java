@@ -89,4 +89,43 @@ public class TestService {
         }
     }
 
+    public static void main(String[] args) {
+//        continueTest();
+        breakTest();
+    }
+
+    private static void continueTest() {
+        outer:
+        for(int i = 0; i<5; i++){
+            for(int j = 0; j<6; j++){
+                if(j == 4){
+                    continue outer;
+                }
+                System.out.println(j);
+            }
+            System.out.println("test");
+        }
+        System.out.println("finish");
+    }
+
+    private static void breakTest() {
+        outer: {
+            inner: {
+                for (int i = 0; i < 3; i++) {
+                    for(int j = 0; j < 5; j++){
+                        if(j==4){
+                            break outer;
+                        }
+                        System.out.println(j);
+                    }
+                    System.out.println("test");
+                }
+                System.out.println("finish");
+            }
+            System.out.println("outer");
+        }
+
+    }
+
+
 }

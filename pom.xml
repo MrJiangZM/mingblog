@@ -54,6 +54,7 @@
         <module>minio</module>
         <module>fastdfs</module>
         <module>mapstruct</module>
+        <module>hutool</module>
     </modules>
 
     <parent>

@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>disruptor</artifactId>
-    <name>disruptor实战-单一生产消费者</name>
+    <name>disruptor</name>
 
     <dependencies>
         <!-- 引入 Spring Boot 依赖 -->
