@@ -20,7 +20,7 @@ public class NotifyEventHandlerFour implements EventHandler<NotifyEvent>, WorkHa
 
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
-//        Thread.sleep(3000L);
+        Thread.sleep(3000L);
         log.info("处理业务逻辑444444444444 ==>> {}", notifyEvent);
     }
 

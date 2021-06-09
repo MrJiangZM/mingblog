@@ -21,7 +21,7 @@ public class NotifyEventHandlerOne implements EventHandler<NotifyEvent>, WorkHan
 
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
-//        Thread.sleep(1000L);
+        Thread.sleep(1000L);
 //        log.info("处理业务逻辑11111111111 ==>> {}", JSONObject.toJSONString(String.valueOf(notifyEvent.getMessage())));
         log.info("处理业务逻辑11111111111 ==>> {}", notifyEvent);
     }

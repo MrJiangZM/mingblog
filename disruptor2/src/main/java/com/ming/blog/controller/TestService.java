@@ -45,27 +45,29 @@ public class TestService {
 //        disruptor.after(one, two).handleEventsWith(five);
 
         //1后2，3后4，1和3并发，2和4都结束后last
-//        disruptor.handleEventsWith(one, three);
-//        disruptor.after(one).handleEventsWith(two);
-//        disruptor.after(three).handleEventsWith(four);
-//        disruptor.after(two, four).handleEventsWith(five);
+        disruptor.handleEventsWith(one, three);
+        disruptor.after(one).handleEventsWith(two);
+        disruptor.after(three).handleEventsWith(four);
+        disruptor.after(two, four).handleEventsWith(five);
 
 //        1 2 全部执行接收到的消息
 //        disruptor.handleEventsWith(one, two);
 
 //        这个是类似于队列，公屏消费，消费总量等于消息总量
-        disruptor.handleEventsWithWorkerPool(one, two);
+//        disruptor.handleEventsWithWorkerPool(one, two);
 
         disruptor.start();
 
         RingBuffer<NotifyEvent> ringBuffer = disruptor.getRingBuffer();
         EventProducer eventProducer = new EventProducer(ringBuffer);
         ByteBuffer bb = ByteBuffer.allocate(16);
-        // 缓冲区的使用 ！！！！！
-        for (long i = 0; i < 10L; i++) {
-            bb.putLong(0, i);
-            eventProducer.onData(bb);
-        }
+        eventProducer.onData(bb);
+
+        // 缓冲区的使用 ！！！！！ 可以做队列来使用
+//        for (long i = 0; i < 10L; i++) {
+//            bb.putLong(0, i);
+//            eventProducer.onData(bb);
+//        }
         disruptor.shutdown();
     }
 

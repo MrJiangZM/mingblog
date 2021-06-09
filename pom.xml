@@ -55,6 +55,7 @@
         <module>fastdfs</module>
         <module>mapstruct</module>
         <module>hutool</module>
+        <module>observer</module>
     </modules>
 
     <parent>
