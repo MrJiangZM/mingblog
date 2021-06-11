@@ -45,6 +45,8 @@ public class TestService {
 //        disruptor.after(one, two).handleEventsWith(five);
 
         //1后2，3后4，1和3并发，2和4都结束后last
+        // 两者不同在于前者只有一个消费者执行 下面的所有消费者执行
+        disruptor.handleEventsWithWorkerPool(one, three);
         disruptor.handleEventsWith(one, three);
         disruptor.after(one).handleEventsWith(two);
         disruptor.after(three).handleEventsWith(four);
