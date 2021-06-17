@@ -56,6 +56,8 @@
         <module>mapstruct</module>
         <module>hutool</module>
         <module>observer</module>
+        <module>MDCTrace</module>
+        <module>disruptor3</module>
     </modules>
 
     <parent>

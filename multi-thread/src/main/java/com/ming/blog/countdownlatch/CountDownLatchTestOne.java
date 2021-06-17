@@ -12,10 +12,10 @@ public class CountDownLatchTestOne {
 
     public static void main(String[] args) throws Exception {
         // 简单的测试用法
-//        testOne();
+        testOne();
 //        testTwo();
 //        testThree();
-        testFour();
+//        testFour();
     }
 
     /**
@@ -102,7 +102,7 @@ public class CountDownLatchTestOne {
     private static void testOne() {
         CountDownLatch countDownLatch = new CountDownLatch(5);
         ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(20);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             scheduler.execute(() -> {
                 try {
                     Thread.sleep(5000L);

@@ -16,14 +16,17 @@ public class NotifyEventHandlerOne implements EventHandler<NotifyEvent>, WorkHan
     @Override
     public void onEvent(NotifyEvent notifyEvent, long l, boolean b) throws Exception {
 //        log.info("接收到了消息111111111111{}, {}, {}", notifyEvent, l, b);
-        this.onEvent(notifyEvent);
+//        this.onEvent(notifyEvent);
+        System.out.println("处理==业务逻辑11111111111 ==>>   EventHandler" + l);
     }
 
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
-        Thread.sleep(1000L);
-//        log.info("处理业务逻辑11111111111 ==>> {}", JSONObject.toJSONString(String.valueOf(notifyEvent.getMessage())));
-        log.info("处理业务逻辑11111111111 ==>> {}", notifyEvent);
+        Thread.sleep(100L);
+//        Thread.sleep(1000L);
+//        log.info(" 处理==业务逻辑11111111111 ==>> {}", JSONObject.toJSONString(String.valueOf(notifyEvent.getMessage())));
+//        log.info(" 处理==业务逻辑11111111111 ==>> {}", notifyEvent);
+        System.out.println("处理==业务逻辑11111111111 ==>>    WorkHandler");
     }
 
 }

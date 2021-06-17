@@ -21,7 +21,7 @@ public class NotifyEventHandler implements EventHandler<NotifyEvent>, WorkHandle
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
         Thread.sleep(3000L);
-        log.info("处理业务逻辑 ==>> {}", notifyEvent);
+        log.info(" 处理==业务逻辑 ==>> {}", notifyEvent);
     }
 
 }

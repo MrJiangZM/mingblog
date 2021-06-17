@@ -15,13 +15,16 @@ public class NotifyEventHandlerTwo implements EventHandler<NotifyEvent>, WorkHan
     @Override
     public void onEvent(NotifyEvent notifyEvent, long l, boolean b) throws Exception {
 //        log.info("接收到了消息2222222222222{}, {}, {}", notifyEvent, l, b);
-        this.onEvent(notifyEvent);
+//        this.onEvent(notifyEvent);
+        System.out.println("处理==业务逻辑222222 ==>>    EventHandler" + l);
     }
 
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
-//        Thread.sleep(3000L);
-        log.info("处理业务逻辑222222 ==>> {}", notifyEvent);
+        Thread.sleep(100L);
+//        Thread.sleep(500L);
+//        log.info(" 处理==业务逻辑222222 ==>> {}", notifyEvent);
+        System.out.println("处理==业务逻辑222222 ==>>      WorkHandler");
     }
 
 }

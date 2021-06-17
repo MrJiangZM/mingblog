@@ -14,16 +14,17 @@ import java.util.concurrent.ThreadFactory;
  * @author Jiang Zaiming
  * @date 2020/6/5 6:00 下午
  */
-public class TestService {
+public class SingleService {
 
     public static void main(String[] args) {
         ThreadFactory producerFactory = Executors.defaultThreadFactory();
         NotifyEventFactory eventFactory = new NotifyEventFactory();
-        int bufferSize = 8;
+        int bufferSize = 4;
 
         //ProducerType.MULTI 暂未测试这种情况
-        Disruptor<NotifyEvent> disruptor = new Disruptor<>(eventFactory, bufferSize, producerFactory,
+        Disruptor<NotifyEvent> disruptor = new Disruptor<NotifyEvent>(eventFactory, bufferSize, producerFactory,
                 ProducerType.SINGLE, new BlockingWaitStrategy());
+        disruptor.setDefaultExceptionHandler(new NotifyEventHandlerException());
 
         NotifyEventHandlerOne one = new NotifyEventHandlerOne();
         NotifyEventHandlerTwo two = new NotifyEventHandlerTwo();
@@ -31,41 +32,54 @@ public class TestService {
         NotifyEventHandlerFour four = new NotifyEventHandlerFour();
         NotifyEventHandlerFive five = new NotifyEventHandlerFive();
 
+
+//        1 2 全部执行接收到的消息   类似于 发布订阅模式
+//        disruptor.handleEventsWith(one, two);
+
+//        这个是类似于队列，公屏消费，消费总量等于消息总量
+//        两者不同在于前者只有一个消费者执行 下面的所有消费者执行
+        disruptor.handleEventsWith(four, five);
+
+//        所有消费着都执行
+//        disruptor.handleEventsWith(one, three, two, four, five);
+
 //        结合缓冲区，当前缓冲区满了才会走下一步
 //        1,2,last顺序执行
-//        disruptor.handleEventsWith(one).handleEventsWith(two)
+//        disruptor.handleEventsWith(one).handleEventsWith(two).thenHandleEventsWithWorkerPool(three, four)
 //                .handleEventsWith(five);
 
 //        也是1，2，last顺序执行
 //        disruptor.handleEventsWith(one);
+//        以下两个等价
 //        disruptor.after(one).handleEventsWith(two).then(five);
+//        disruptor.after(one).then(two).then(five);
+
 
         //1,2并发执行，之后才是last
+//        disruptor.handleEventsWith(one, two).handleEventsWith(five);
+
 //        disruptor.handleEventsWith(one, two);
 //        disruptor.after(one, two).handleEventsWith(five);
 
         //1后2，3后4，1和3并发，2和4都结束后last
-        // 两者不同在于前者只有一个消费者执行 下面的所有消费者执行
-        disruptor.handleEventsWithWorkerPool(one, three);
-        disruptor.handleEventsWith(one, three);
-        disruptor.after(one).handleEventsWith(two);
-        disruptor.after(three).handleEventsWith(four);
-        disruptor.after(two, four).handleEventsWith(five);
+//        disruptor.handleEventsWithWorkerPool(one, three).thenHandleEventsWithWorkerPool(two, four).handleEventsWith(five);
+//      基本同上 但是每个消费者都会执行
+//        disruptor.handleEventsWith(one, three);
+//        disruptor.after(one).handleEventsWith(two);
+//        disruptor.after(three).handleEventsWith(four);
+//        disruptor.after(two, four).handleEventsWith(five);
 
-//        1 2 全部执行接收到的消息
-//        disruptor.handleEventsWith(one, two);
-
-//        这个是类似于队列，公屏消费，消费总量等于消息总量
-//        disruptor.handleEventsWithWorkerPool(one, two);
 
         disruptor.start();
 
         RingBuffer<NotifyEvent> ringBuffer = disruptor.getRingBuffer();
-        EventProducer eventProducer = new EventProducer(ringBuffer);
-        ByteBuffer bb = ByteBuffer.allocate(16);
-        eventProducer.onData(bb);
+        EventProducer eventProducer = new EventProducer(ringBuffer, 1);
+        for (long i = 0; i < 10L; i++) {
+            ByteBuffer bb = ByteBuffer.allocate(16);
+            eventProducer.sendDataEventHandler(bb);
+        }
 
-        // 缓冲区的使用 ！！！！！ 可以做队列来使用
+//         缓冲区的使用 ！！！！！ 可以做队列来使用
 //        for (long i = 0; i < 10L; i++) {
 //            bb.putLong(0, i);
 //            eventProducer.onData(bb);
