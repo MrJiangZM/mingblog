@@ -1,5 +1,7 @@
 package com.ming.blog.config;
 
+import com.ming.blog.email.EmailDataEventHandler;
+import com.ming.blog.order.OrderDataEventHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,63 +11,90 @@ public class DisruptorConfig {
     /**
      * smsParamEventHandler1
      *
-     * @return SeriesDataEventHandler
+     * @return OrderDataEventHandler
      */
     @Bean
-    public SeriesDataEventHandler smsParamEventHandler1() {
-        return new SeriesDataEventHandler();
+    public OrderDataEventHandler smsParamEventHandler1() {
+        return new OrderDataEventHandler();
     }
 
     /**
      * smsParamEventHandler2
      *
-     * @return SeriesDataEventHandler
+     * @return OrderDataEventHandler
      */
     @Bean
-    public SeriesDataEventHandler smsParamEventHandler2() {
-        return new SeriesDataEventHandler();
+    public OrderDataEventHandler smsParamEventHandler2() {
+        return new OrderDataEventHandler();
     }
 
     /**
      * smsParamEventHandler3
      *
-     * @return SeriesDataEventHandler
+     * @return OrderDataEventHandler
      */
     @Bean
-    public SeriesDataEventHandler smsParamEventHandler3() {
-        return new SeriesDataEventHandler();
+    public OrderDataEventHandler smsParamEventHandler3() {
+        return new OrderDataEventHandler();
     }
 
 
     /**
      * smsParamEventHandler4
      *
-     * @return SeriesDataEventHandler
+     * @return OrderDataEventHandler
      */
     @Bean
-    public SeriesDataEventHandler smsParamEventHandler4() {
-        return new SeriesDataEventHandler();
+    public OrderDataEventHandler smsParamEventHandler4() {
+        return new OrderDataEventHandler();
     }
 
     /**
      * smsParamEventHandler5
      *
-     * @return SeriesDataEventHandler
+     * @return OrderDataEventHandler
      */
     @Bean
-    public SeriesDataEventHandler smsParamEventHandler5() {
-        return new SeriesDataEventHandler();
+    public OrderDataEventHandler smsParamEventHandler5() {
+        return new OrderDataEventHandler();
     }
 
 
     /**
      * smsParamEventHandler5
      *
-     * @return SeriesDataEventHandler
+     * @return OrderDataEventHandler
      */
     @Bean
-    public SeriesDataEventHandler smsParamEventHandler6() {
-        return new SeriesDataEventHandler();
+    public OrderDataEventHandler smsParamEventHandler6() {
+        return new OrderDataEventHandler();
+    }
+
+
+    @Bean
+    public EmailDataEventHandler smsEmailParamEventHandler4() {
+        return new EmailDataEventHandler();
+    }
+
+    /**
+     * smsParamEventHandler5
+     *
+     * @return OrderDataEventHandler
+     */
+    @Bean
+    public EmailDataEventHandler smsEmailParamEventHandler5() {
+        return new EmailDataEventHandler();
+    }
+
+
+    /**
+     * smsParamEventHandler5
+     *
+     * @return OrderDataEventHandler
+     */
+    @Bean
+    public EmailDataEventHandler smsEmailParamEventHandler6() {
+        return new EmailDataEventHandler();
     }
 
 

@@ -21,7 +21,7 @@ public class NotifyEventHandlerFour implements EventHandler<NotifyEvent>, WorkHa
 
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
-        Thread.sleep(300L);
+        Thread.sleep(1000L);
 //        Thread.sleep(3000L);
 //        System.out.println("处理==业务逻辑444444444444 ==>>   WorkHandler ");
     }

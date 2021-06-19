@@ -33,7 +33,7 @@ public class NotifyEventHandlerFive implements EventHandler<NotifyEvent>, WorkHa
      */
     @Override
     public void onEvent(NotifyEvent notifyEvent) throws Exception {
-        Thread.sleep(300L);
+        Thread.sleep(1000L);
 //        log.info(" 处理==业务逻辑555555555555555 ==>> {}", notifyEvent);
 //        int i = 1/0;
 //        System.out.println("处理==业务逻辑555555555555555 ==>>  WorkHandler");
