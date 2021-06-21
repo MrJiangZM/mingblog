@@ -1,0 +1,3 @@
+spring 整合线程池
+指定具体参数 可以设定返回值
+还可以和countdownlantch结合
