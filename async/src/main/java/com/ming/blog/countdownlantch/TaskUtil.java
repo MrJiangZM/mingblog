@@ -1,8 +1,10 @@
 package com.ming.blog.countdownlantch;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.util.concurrent.ListenableFutureTask;
 import javax.annotation.Resource;
 import java.util.concurrent.CompletableFuture;
@@ -14,6 +16,7 @@ import java.util.concurrent.Executor;
  * @since <pre>2021/6/21</pre>
  */
 @Component
+@Slf4j
 public class TaskUtil<V> {
 
     @Resource
@@ -89,5 +92,52 @@ public class TaskUtil<V> {
             serviceVoidTask.task();
         }, serviceTaskExecutor1);
     }
+
+    /**
+     * 有返回结果 使用completable
+     *
+     * @return
+     */
+    public ListenableFuture<V> submitFutureTaskWithListener(ServiceFutureTask<V> serviceFutureTask,
+                                                            ListenableFutureCallback<V> listenableFutureCallback) {
+        Long traceId = 222222222222222222L;
+        System.out.println(Thread.currentThread().getName() + "-sub thread name with traceId-" + traceId);
+        ListenableFuture<V> vListenableFuture = serviceTaskExecutor2.submitListenable(() -> {
+            System.out.println(Thread.currentThread().getName() + "-thread name with traceId-" + traceId);
+            return serviceFutureTask.task();
+        });
+        vListenableFuture.addCallback(listenableFutureCallback);
+        return vListenableFuture;
+    }
+
+
+    public void testAsync() {
+
+        ListenableFuture<TestCountDownLatchController.UserTest> task = serviceTaskExecutor2.submitListenable(() -> {
+            TestCountDownLatchController.UserTest test = new TestCountDownLatchController.UserTest();
+            test.setAge(100);
+            test.setId(1);
+            test.setName("大明");
+            return test;
+        });
+
+        task.addCallback(new ListenableFutureCallback<TestCountDownLatchController.UserTest>() {
+
+            @Override
+            public void onSuccess(TestCountDownLatchController.UserTest userTest) {
+                if (userTest == null) {
+                    userTest = new TestCountDownLatchController.UserTest(2, "小明", 500);
+                }
+                // 需要做的任务
+                // doSomething
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                log.error("Error executing callback.{}", t);
+            }
+        });
+    }
+
 
 }

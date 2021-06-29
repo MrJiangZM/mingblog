@@ -12,14 +12,12 @@ import java.nio.ByteBuffer;
  * @author Jiang Zaiming
  * @date 2020/6/5 4:04 下午
  */
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class NotifyEvent implements Serializable, Cloneable {
+public class TestEvent implements Serializable, Cloneable {
 
     private Integer id;
-    private ByteBuffer message;
-    private String messageStr;
+    private String name;
 
 }

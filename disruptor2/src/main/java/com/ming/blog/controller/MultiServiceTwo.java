@@ -2,22 +2,14 @@ package com.ming.blog.controller;
 
 import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.RingBuffer;
-import com.lmax.disruptor.SequenceBarrier;
-import com.lmax.disruptor.WorkHandler;
-import com.lmax.disruptor.WorkerPool;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import com.ming.blog.disruptor.EventProducer;
-import com.ming.blog.disruptor.NotifyEvent;
 import com.ming.blog.disruptor.NotifyEventFactory;
 import com.ming.blog.disruptor.NotifyEventHandlerException;
-import com.ming.blog.disruptor.NotifyEventHandlerFive;
-import com.ming.blog.disruptor.NotifyEventHandlerFour;
-import com.ming.blog.disruptor.NotifyEventHandlerOne;
-import com.ming.blog.disruptor.NotifyEventHandlerThree;
-import com.ming.blog.disruptor.NotifyEventHandlerTwo;
+import com.ming.blog.disruptor.TestEvent;
+import com.ming.blog.disruptor.TestEventHandler;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
@@ -27,30 +19,23 @@ import java.util.concurrent.ThreadFactory;
  */
 public class MultiServiceTwo {
 
-    /**
-     * 多生产者 多消费者
-     * @param args
-     * @throws InterruptedException
-     */
     public static void main(String[] args) throws InterruptedException {
         ThreadFactory producerFactory = Executors.defaultThreadFactory();
         NotifyEventFactory eventFactory = new NotifyEventFactory();
-        int bufferSize = 4;
+        int bufferSize = 256;
 
-        //ProducerType.MULTI 暂未测试这种情况
-        Disruptor<NotifyEvent> disruptor = new Disruptor<NotifyEvent>(eventFactory, bufferSize, producerFactory,
+        Disruptor<TestEvent> disruptor = new Disruptor<>(eventFactory, bufferSize, producerFactory,
                 ProducerType.MULTI, new BlockingWaitStrategy());
         disruptor.setDefaultExceptionHandler(new NotifyEventHandlerException());
+        RingBuffer<TestEvent> ringBuffer = disruptor.getRingBuffer();
 
-        NotifyEventHandlerOne one = new NotifyEventHandlerOne();
-        NotifyEventHandlerTwo two = new NotifyEventHandlerTwo();
-        NotifyEventHandlerThree three = new NotifyEventHandlerThree();
-        NotifyEventHandlerFour four = new NotifyEventHandlerFour();
-        NotifyEventHandlerFive five = new NotifyEventHandlerFive();
+        TestEventHandler one = new TestEventHandler("小明", ringBuffer);
+        TestEventHandler two = new TestEventHandler("小红", ringBuffer);
+        TestEventHandler three = new TestEventHandler("小刚", ringBuffer);
+        TestEventHandler four = new TestEventHandler("小李", ringBuffer);
+        TestEventHandler five = new TestEventHandler("小马", ringBuffer);
 
-        RingBuffer<NotifyEvent> ringBuffer = disruptor.getRingBuffer();
-
-        disruptor.handleEventsWithWorkerPool(four, five);
+        disruptor.handleEventsWithWorkerPool(one, three, two, four, five);
 
         disruptor.start();
 
@@ -77,7 +62,6 @@ public class MultiServiceTwo {
         System.out.println("等待任务执行");
         Thread.sleep(10000);
 
-//        disruptor.start();
         disruptor.shutdown();
         System.out.println("任务执行成功 shutdown");
     }

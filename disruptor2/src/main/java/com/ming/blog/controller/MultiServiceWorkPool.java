@@ -8,14 +8,10 @@ import com.lmax.disruptor.WorkerPool;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import com.ming.blog.disruptor.EventProducer;
-import com.ming.blog.disruptor.NotifyEvent;
 import com.ming.blog.disruptor.NotifyEventFactory;
 import com.ming.blog.disruptor.NotifyEventHandlerException;
-import com.ming.blog.disruptor.NotifyEventHandlerFive;
-import com.ming.blog.disruptor.NotifyEventHandlerFour;
-import com.ming.blog.disruptor.NotifyEventHandlerOne;
-import com.ming.blog.disruptor.NotifyEventHandlerThree;
-import com.ming.blog.disruptor.NotifyEventHandlerTwo;
+import com.ming.blog.disruptor.TestEvent;
+import com.ming.blog.disruptor.TestEventHandler;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,17 +29,17 @@ public class MultiServiceWorkPool {
         int bufferSize = 256;
 
         //ProducerType.MULTI 暂未测试这种情况
-        Disruptor<NotifyEvent> disruptor = new Disruptor<NotifyEvent>(eventFactory, bufferSize, producerFactory,
+        Disruptor<TestEvent> disruptor = new Disruptor<TestEvent>(eventFactory, bufferSize, producerFactory,
                 ProducerType.MULTI, new BlockingWaitStrategy());
-//        disruptor.setDefaultExceptionHandler(new NotifyEventHandlerException());
+        disruptor.setDefaultExceptionHandler(new NotifyEventHandlerException());
+        RingBuffer<TestEvent> ringBuffer = disruptor.getRingBuffer();
 
-        NotifyEventHandlerOne one = new NotifyEventHandlerOne();
-        NotifyEventHandlerTwo two = new NotifyEventHandlerTwo();
-        NotifyEventHandlerThree three = new NotifyEventHandlerThree();
-        NotifyEventHandlerFour four = new NotifyEventHandlerFour();
-        NotifyEventHandlerFive five = new NotifyEventHandlerFive();
+        TestEventHandler one = new TestEventHandler("小明", ringBuffer);
+        TestEventHandler two = new TestEventHandler("小红", ringBuffer);
+        TestEventHandler three = new TestEventHandler("小刚", ringBuffer);
+        TestEventHandler four = new TestEventHandler("小李", ringBuffer);
+        TestEventHandler five = new TestEventHandler("小马", ringBuffer);
 
-        RingBuffer<NotifyEvent> ringBuffer = disruptor.getRingBuffer();
 
         //2 通过Ringbuffer创建一个屏障
         SequenceBarrier sequenceBarrier = ringBuffer.newBarrier();
@@ -51,7 +47,7 @@ public class MultiServiceWorkPool {
         WorkHandler[] workHandlers = {one, three, two, four, five};
 
         //4 构建多消费者工作池
-        WorkerPool<NotifyEvent> workerPool = new WorkerPool<NotifyEvent>(
+        WorkerPool<TestEvent> workerPool = new WorkerPool<TestEvent>(
                 ringBuffer,
                 sequenceBarrier,
                 new NotifyEventHandlerException(),

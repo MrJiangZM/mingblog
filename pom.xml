@@ -59,6 +59,7 @@
         <module>MDCTrace</module>
         <module>disruptor3</module>
         <module>graghql</module>
+        <module>sentry-log4j2</module>
     </modules>
 
     <parent>

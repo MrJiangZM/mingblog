@@ -22,16 +22,19 @@ public class SingleService {
         int bufferSize = 4;
 
         //ProducerType.MULTI 暂未测试这种情况
-        Disruptor<NotifyEvent> disruptor = new Disruptor<NotifyEvent>(eventFactory, bufferSize, producerFactory,
+        Disruptor<TestEvent> disruptor = new Disruptor<TestEvent>(eventFactory, bufferSize, producerFactory,
                 ProducerType.SINGLE, new BlockingWaitStrategy());
         disruptor.setDefaultExceptionHandler(new NotifyEventHandlerException());
 
-        NotifyEventHandlerOne one = new NotifyEventHandlerOne();
-        NotifyEventHandlerTwo two = new NotifyEventHandlerTwo();
-        NotifyEventHandlerThree three = new NotifyEventHandlerThree();
-        NotifyEventHandlerFour four = new NotifyEventHandlerFour();
-        NotifyEventHandlerFive five = new NotifyEventHandlerFive();
 
+
+        RingBuffer<TestEvent> ringBuffer = disruptor.getRingBuffer();
+
+        TestEventHandler one = new TestEventHandler("小明", ringBuffer);
+        TestEventHandler two = new TestEventHandler("小红", ringBuffer);
+        TestEventHandler three = new TestEventHandler("小刚", ringBuffer);
+        TestEventHandler four = new TestEventHandler("小李", ringBuffer);
+        TestEventHandler five = new TestEventHandler("小马", ringBuffer);
 
 //        1 2 全部执行接收到的消息   类似于 发布订阅模式
 //        disruptor.handleEventsWith(one, two);
@@ -69,17 +72,14 @@ public class SingleService {
 //        disruptor.after(three).handleEventsWith(four);
 //        disruptor.after(two, four).handleEventsWith(five);
 
-
         disruptor.start();
 
-        RingBuffer<NotifyEvent> ringBuffer = disruptor.getRingBuffer();
         EventProducer eventProducer = new EventProducer(ringBuffer, 1);
-        for (long i = 0; i < 10L; i++) {
-            ByteBuffer bb = ByteBuffer.allocate(16);
-            eventProducer.sendDataEventHandler(bb);
+        for (int i = 0; i < 10L; i++) {
+            eventProducer.sendDataEventHandler(i);
         }
 
-//         缓冲区的使用 ！！！！！ 可以做队列来使用
+//         缓冲区的使用 ！！！！！ ByteBuffer 可以做队列来使用
 //        for (long i = 0; i < 10L; i++) {
 //            bb.putLong(0, i);
 //            eventProducer.onData(bb);

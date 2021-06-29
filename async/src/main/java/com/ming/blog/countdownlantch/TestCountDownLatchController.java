@@ -1,7 +1,9 @@
 package com.ming.blog.countdownlantch;
 
 import com.beust.jcommander.internal.Lists;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -233,7 +235,9 @@ public class TestCountDownLatchController {
     }
 
     @Data
-    public class UserTest {
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserTest {
         private Integer id;
         private String name;
         private Integer age;

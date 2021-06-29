@@ -10,19 +10,19 @@ import java.nio.ByteBuffer;
  */
 public class EventProducer {
 
-    private final RingBuffer<NotifyEvent> ringBuffer;
+    private final RingBuffer<TestEvent> ringBuffer;
     private Integer id;
 
-    public EventProducer(RingBuffer<NotifyEvent> ringBuffer, Integer id) {
+    public EventProducer(RingBuffer<TestEvent> ringBuffer, Integer id) {
         this.ringBuffer = ringBuffer;
         this.id = id;
     }
 
-    public void sendDataEventHandler(ByteBuffer bb) {
+    public void sendDataEventHandler(Integer id) {
         long sequence = ringBuffer.next();
         try {
-            NotifyEvent orderEvent = ringBuffer.get(sequence);
-            orderEvent.setMessage(bb);
+            TestEvent testEvent = ringBuffer.get(sequence);
+            testEvent.setId(id);
         } finally {
             ringBuffer.publish(sequence);
         }
@@ -32,12 +32,12 @@ public class EventProducer {
 //        ringBuffer.publishEvent((event, sequence, data) -> event.setMessage(data), bb);
     }
 
-    public void sendDataForMulti(Integer uuid) {
+    public void sendDataForMulti(Integer id) {
         long sequence = ringBuffer.next();
         try {
             System.out.println("生产者" + id + ", 线程--" + Thread.currentThread().getName() + ", 在往sequence上添加数据" + sequence);
-            NotifyEvent orderEvent = ringBuffer.get(sequence);
-            orderEvent.setId(uuid);
+            TestEvent orderEvent = ringBuffer.get(sequence);
+            orderEvent.setId(id);
         } finally {
             ringBuffer.publish(sequence);
         }
