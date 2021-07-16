@@ -60,6 +60,10 @@
         <module>disruptor3</module>
         <module>graghql</module>
         <module>sentry-log4j2</module>
+        <module>vavr</module>
+        <module>webflux</module>
+        <module>guava-eventbus</module>
+        <module>h2</module>
     </modules>
 
     <parent>

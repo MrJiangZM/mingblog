@@ -1,0 +1,12 @@
+# server
+server:
+  port: 8812
+  servlet:
+    context-path: /minio
+
+#minio
+minio:
+  url: http://121.36.71.70:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  defaultFolder: /default
