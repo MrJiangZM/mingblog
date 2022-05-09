@@ -64,6 +64,7 @@
         <module>webflux</module>
         <module>guava-eventbus</module>
         <module>h2</module>
+        <module>algorithm</module>
     </modules>
 
     <parent>

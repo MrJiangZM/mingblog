@@ -29,7 +29,7 @@
         <dependency>
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-spring-boot-starter</artifactId>
-            <version>1.80.0</version>
+            <version>1.89.0</version>
         </dependency>
     </dependencies>
 
